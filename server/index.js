@@ -1,0 +1,23 @@
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import dotenv from "dotenv";
+dotenv.config();
+const app=express();
+app.use(helmet());
+app.use(cors({origin:process.env.CLIENT_ORIGIN||"http://localhost:5173"}));
+app.use(express.json({limit:"20kb"}));
+app.get("/api/health",(_req,res)=>res.json({ok:true,app:"Trisko Locket",providerIntegration:"demo"}));
+function unavailable(_req,res){return res.status(503).json({success:false,mode:"demo",error:"Tích hợp nhà cung cấp đang tắt."});}
+app.get("/api/packages",unavailable);
+app.get("/api/credits",unavailable);
+app.get("/api/activations",unavailable);
+app.get("/api/dns/lookup",unavailable);
+app.post("/api/dns/lookup",unavailable);
+app.post("/api/dns/export",unavailable);
+app.post("/api/activations/:id/renew",unavailable);
+app.post("/api/activations/:id/toggle",unavailable);
+app.post("/api/locket/lookup",unavailable);
+app.get("/",(_req,res)=>res.json({name:"Trisko Locket API",status:"running"}));
+const port=Number(process.env.PORT||3001);
+app.listen(port,()=>console.log("Trisko API listening on "+port));
