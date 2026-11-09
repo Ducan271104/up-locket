@@ -15,10 +15,19 @@ npm run dev
 Frontend: http://localhost:5173  
 Backend health: http://localhost:3001/api/health
 
-## Lưu ý
+## Cấu hình API nhà cung cấp
 
-- Đây là bản demo giao diện; tra cứu, Credits và đơn hàng dùng dữ liệu minh họa.
-- Chưa có thanh toán thật hoặc kích hoạt dịch vụ thật.
-- API nhà cung cấp tắt mặc định; backend trả 503 cho các route provider.
-- Không đưa API token vào frontend hoặc commit file .env.
-- Chỉ tích hợp API khi đã xác minh tài liệu chính thức và quyền sử dụng/phân phối.
+Chỉ cấu hình ở backend (Vercel Environment Variables hoặc `server/.env` khi chạy local):
+
+- `UPLOCKET_API_BASE=https://uplocket.io.vn`
+- `UPLOCKET_API_KEY=` token mới đã được nhà cung cấp cấp lại
+- `PROVIDER_API_ENABLED=true`
+- `CLIENT_ORIGIN=` domain frontend được phép gọi backend
+
+Không gửi token vào trình duyệt, không đặt trong biến `VITE_*`, không commit file `.env`.
+
+Các route đọc dữ liệu được backend proxy gồm packages, credits, activations và lookup. Các thao tác tạo/gia hạn/bật-tắt activation vẫn bị khóa cho tới khi tài liệu API và quyền sử dụng được xác minh. Chưa có tích hợp thanh toán thật.
+
+## Bảo mật
+
+Token từng xuất hiện trong cuộc trò chuyện cần được thu hồi/đổi mới trước khi bật tích hợp. Không sử dụng lại token đã lộ.
