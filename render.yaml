@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: trisko-locket-api
+    runtime: node
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PROVIDER_API_ENABLED
+        value: "false"
+      - key: UPLOCKET_API_BASE
+        value: https://uplocket.io.vn
+      - key: UPLOCKET_API_KEY
+        sync: false
+      - key: CLIENT_ORIGIN
+        sync: false
